@@ -12,6 +12,7 @@ import { AuthType, HttpServer, HttpServerOptions } from "./http"
 import { loadPlugins } from "./plugin"
 import { generateCertificate, hash, humanPath, open } from "./util"
 import { ipcMain, wrap } from "./wrapper"
+import { plural } from "../common/util"
 
 process.on("uncaughtException", (error) => {
   logger.error(`Uncaught exception: ${error.message}`)
@@ -113,7 +114,7 @@ const main = async (args: Args, cliArgs: Args, configArgs: Args): Promise<void> 
   }
 
   if (httpServer.proxyDomains.size > 0) {
-    logger.info(`  - Proxying the following domain${httpServer.proxyDomains.size === 1 ? "" : "s"}:`)
+    logger.info(`  - ${plural(httpServer.proxyDomains.size, "Proxying the following domain")}:`)
     httpServer.proxyDomains.forEach((domain) => logger.info(`    - *.${domain}`))
   }
 
